@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 
 from markupsafe import escape
 
@@ -30,7 +30,13 @@ with app.test_request_context():
   print(url_for('hello_world'))
   print(url_for('hello', name="flask"))
 
+# static file
 @app.route('/test2')
 def test2():
   css_url = url_for('static', filename='index.css')
   return f'<link rel="stylesheet" href="{css_url}">Hello, World!'
+
+# render template
+@app.route('/blog')
+def blog():
+  return render_template('blog.html')
