@@ -21,3 +21,16 @@ def hello_workd2():
 @app.route('/<name>')
 def hello(name):
   return f"hello, {escape(name)}12"
+
+@app.route('/test', methods=['POST'])
+def test():
+  return "test"
+
+with app.test_request_context():
+  print(url_for('hello_world'))
+  print(url_for('hello', name="flask"))
+
+@app.route('/test2')
+def test2():
+  css_url = url_for('static', filename='index.css')
+  return f'<link rel="stylesheet" href="{css_url}">Hello, World!'
