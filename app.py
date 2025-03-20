@@ -1,4 +1,5 @@
-from flask import Flask, url_for, render_template
+from flask import Flask, url_for, render_template, request
+from werkzeug.utils import secure_filename
 
 from markupsafe import escape
 
@@ -40,3 +41,21 @@ def test2():
 @app.route('/blog')
 def blog():
   return render_template('blog.html')
+
+
+# request 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  if request.method == 'POST':
+    print(request.get_json())
+    # print(request.form['password'])
+  return "ok"
+
+# upload
+@app.route('/upload', methods=['POST'])
+def upload_file():
+  f = request.files['file']
+  print(f.filename)
+  print(f"{secure_filename(f.filename)}")
+  f.save(f"uploads/{f.filename}")
+  return "ok"
